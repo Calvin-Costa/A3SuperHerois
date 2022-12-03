@@ -40,7 +40,7 @@ public class InterfaceGUI extends JFrame {
     JButton botaoIniciaConfronto = new JButton("Começar Combate");
     JButton botaoResetaConfronto = new JButton("Resetar Personagens");
     JButton botaoSelecionaPersonagemDir = new JButton("Selecionar Personagem");
-    ImageIcon img = new ImageIcon("Atividade A3\\images\\heroicon.png");
+    ImageIcon img = new ImageIcon("images\\heroicon.png");
 
     // Construtor
     public InterfaceGUI(List<Personagem> listaPersonagens) {

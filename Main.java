@@ -11,19 +11,20 @@ public class Main {
                 Poder visaoSuperman = new Poder("Visão de Raios", 5, 5);
                 Poder soproSuperman = new Poder("Super Sopro", 4, 4);
                 Heroi superman = new Heroi("Superman", dc, 100, 70, "Clark Kent",
-                                new ImageIcon("Atividade A3\\images\\superman_img.jpg"), fSuperman, visaoSuperman,
+                                new ImageIcon("images\\superman_img.jpg"), fSuperman, visaoSuperman,
                                 soproSuperman);
                 listaPersonagens.add(superman);
 
                 Poder fHomemAranha = new Poder("Força", 7, 5);
                 Poder soltarTeia = new Poder("Soltar Teia", 5, 5);
                 Heroi homemAranha = new Heroi("Homem-Aranha", marvel, 80, 50, "Peter Parker",
-                                new ImageIcon("Atividade A3\\images\\homenaranha_img.jpg"), fHomemAranha, soltarTeia);
+                                new ImageIcon("images\\homenaranha_img.jpg"), fHomemAranha,
+                                soltarTeia);
                 listaPersonagens.add(homemAranha);
 
                 Poder fFenix = new Poder("Força", 12, 10);
                 Heroi fenix = new Heroi("Fênix", marvel, 150, 100, "Jean Grey",
-                                new ImageIcon("Atividade A3\\images\\fenix_img.jpg"), fFenix);
+                                new ImageIcon("images\\fenix_img.jpg"), fFenix);
                 listaPersonagens.add(fenix);
 
                 // Adicionando Vilões
@@ -32,19 +33,19 @@ public class Main {
                 Poder visaoBizarro = new Poder("Visao de Raios", 5, 5);
                 Poder soproBizarro = new Poder("Supersopro", 4, 4);
                 Vilao superBizarro = new Vilao("Superbizarro", dc, 95, 65, 50,
-                                new ImageIcon("Atividade A3\\images\\superbizarro_img.jpg"), fSuperBizarro,
+                                new ImageIcon("images\\superbizarro_img.jpg"), fSuperBizarro,
                                 soproBizarro, visaoBizarro);
                 listaPersonagens.add(superBizarro);
 
                 Poder fDuende = new Poder("Força", 7, 5);
                 Poder granada = new Poder("Granada de Abóbora", 5, 5);
                 Vilao duendeVerde = new Vilao("Duende Verde", marvel, 80, 60, 70,
-                                new ImageIcon("Atividade A3\\images\\duendeverde_img.jpg"), fDuende, granada);
+                                new ImageIcon("images\\duendeverde_img.jpg"), fDuende, granada);
                 listaPersonagens.add(duendeVerde);
 
                 Poder tentaculos = new Poder("Tentáculos", 6, 4);
                 Vilao doutorOctopus = new Vilao("Doutor Octopus", marvel, 40, 40, 40,
-                                new ImageIcon("Atividade A3\\images\\droctopus_img.jpg"), tentaculos);
+                                new ImageIcon("images\\droctopus_img.jpg"), tentaculos);
                 listaPersonagens.add(doutorOctopus);
 
                 InterfaceGUI guii = new InterfaceGUI(listaPersonagens);
