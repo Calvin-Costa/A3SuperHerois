@@ -10,10 +10,10 @@ public class Confronto {
 
     public void confrontar() {
 
-        if (p1.getNome().equals("Superskrull") || p1.getNome().equals("Mímico")) {
+        if (p1.getNome().equals("SuperSkrull") || p1.getNome().equals("Mímico")) {
             p1.copiarPoderes(p2);
         }
-        if (p2.getNome().equals("Superskrull") || p2.getNome().equals("Mímico")) {
+        if (p2.getNome().equals("SuperSkrull") || p2.getNome().equals("Mímico")) {
             p2.copiarPoderes(p1);
         }
         // recuperar tudo
