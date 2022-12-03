@@ -166,6 +166,10 @@ public class InterfaceGUI extends JFrame {
         // Adding Button "start battle" on the Panel pButtons
         addConstraints(pButtons, pStart, 1, 0, 1, 1, GridBagConstraints.BOTH);
         pStart.add(botaoIniciaConfronto);
+        botaoIniciaConfronto.addActionListener(e -> {
+            Confronto c1 = new Confronto(personagemSelEsq, personagemSelDir);
+            c1.confrontar();
+        });
         // Adding Button "reset characters" on the Panel pButtons
         addConstraints(pButtons, pReset, 1, 1, 1, 1, GridBagConstraints.BOTH);
         pReset.add(botaoResetaConfronto);
