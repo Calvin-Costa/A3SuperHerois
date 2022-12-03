@@ -13,6 +13,7 @@ public abstract class Personagem {
     private int peInicial;
     private int pfInicial;
     private ImageIcon foto = new ImageIcon();
+    private String pronome;
 
     // Criando o Array de personagens
     private ArrayList<Poder> poderes = new ArrayList<Poder>();
@@ -23,6 +24,14 @@ public abstract class Personagem {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getPronome() {
+        return pronome;
+    }
+
+    public void setPronome(String pronome) {
+        this.pronome = pronome;
     }
 
     public ImageIcon getFoto() {
@@ -94,7 +103,8 @@ public abstract class Personagem {
     }
 
     // Construtor Personagem com qtd variável de poderes
-    public Personagem(String nome, String editora, int pf, int pe, ImageIcon foto, Poder... poder) {
+    public Personagem(String pronome, String nome, String editora, int pf, int pe, ImageIcon foto, Poder... poder) {
+        this.pronome = pronome;
         this.nome = nome;
         this.editora = editora;
         this.pf = pf;
@@ -118,7 +128,7 @@ public abstract class Personagem {
         // System.out.println(this.poderes.get(randomNumber).getPe());
 
         if (getPe() > this.poderes.get(randomNumber).getPe()) {
-            System.out.printf("O(A) %s ataca com com %s e causou %d de dano!%n", getNome(),
+            System.out.printf("%s %s ataca com %s e causou %d de dano!%n", getPronome(), getNome(),
                     this.poderes.get(randomNumber).getNome(), this.poderes.get(randomNumber).getDano());
 
             pe = getPe() - this.poderes.get(randomNumber).getPe();
@@ -129,11 +139,11 @@ public abstract class Personagem {
 
             p2.setPf(aux);
 
-            System.out.printf("A nova energia do %s é de: %d%n", getNome(), pe);
-            System.out.printf("A nova força do %s é de: %d%n", p2.getNome(), p2.getPf());
+            System.out.printf("A nova energia de %s é de: %d%n", getNome(), pe);
+            System.out.printf("A nova força de %s é de: %d%n", p2.getNome(), p2.getPf());
 
         } else {
-            System.out.printf("O %s está esgotado. Utilize esse turno para recuperar%n", getNome());
+            System.out.printf("%s %s está esgotado. Utilize esse turno para recuperar%n", getPronome(), getNome());
 
             Recuperar();
 

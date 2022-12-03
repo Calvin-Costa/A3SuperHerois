@@ -11,8 +11,9 @@ public class Vilao extends Personagem {
         this.nivelDeMaldade = nivelDeMaldade;
     }
 
-    public Vilao(String nome, String editora, int pf, int pe, int nivelDeMaldade,ImageIcon foto, Poder... poder) {
-        super(nome, editora, pf, pe,foto, poder);
+    public Vilao(String pronome, String nome, String editora, int pf, int pe, int nivelDeMaldade, ImageIcon foto,
+            Poder... poder) {
+        super(pronome, nome, editora, pf, pe, foto, poder);
         this.nivelDeMaldade = nivelDeMaldade;
     }
 

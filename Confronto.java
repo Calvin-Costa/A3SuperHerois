@@ -40,11 +40,13 @@ public class Confronto {
         // Exibur o nonme dos oponentes e seus PFs
 
         // Oponente 1
-        System.out.printf("O(a) %s tem %d de pontos de força, e está pronto para o combate!%n", p1.getNome(),
+        System.out.printf("%s %s tem %d de pontos de força, e está pronto para o combate!%n", p1.getPronome(),
+                p1.getNome(),
                 p1.getPf());
 
         // Oponente 2
-        System.out.printf("O(a) %s tem %d de pontos de força, e está pronto para o combate!%n", p2.getNome(),
+        System.out.printf("%s %s tem %d de pontos de força, e está pronto para o combate!%n", p2.getPronome(),
+                p2.getNome(),
                 p2.getPf());
 
         while (p1.getPf() > 0 && p2.getPf() > 0) {
@@ -57,12 +59,12 @@ public class Confronto {
 
         if (p1.getPf() < 0) {
 
-            this.vencedor = p1;
+            this.vencedor = p2;
 
         } else {
 
             this.vencedor = p1;
         }
-        System.out.printf("%nO(A) %s foi o vencedor desse confronto!%n", vencedor.getNome());
+        System.out.printf("%n%s %s foi o vencedor desse confronto!%n", vencedor.getPronome(), vencedor.getNome());
     }
 }

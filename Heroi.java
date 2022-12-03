@@ -15,8 +15,9 @@ public class Heroi extends Personagem {
     }
 
     // Construtor
-    public Heroi(String nome, String editora, int pf, int pe, String NomeReal, ImageIcon foto, Poder... poder) {
-        super(nome, editora, pf, pe, foto, poder);
+    public Heroi(String pronome, String nome, String editora, int pf, int pe, String NomeReal, ImageIcon foto,
+            Poder... poder) {
+        super(pronome, nome, editora, pf, pe, foto, poder);
         this.NomeReal = NomeReal;
     }
 }
