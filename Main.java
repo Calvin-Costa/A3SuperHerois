@@ -28,6 +28,10 @@ public class Main {
                                 new ImageIcon("images\\fenix_img.jpg"), fFenix);
                 listaPersonagens.add(fenix);
 
+                Heroi mimico = new Heroi(pronomeO, "Mimico", marvel, 70, 50, "Calvin Montgomery Rankin",
+                                new ImageIcon("images\\mimico_img.jpg"));
+                listaPersonagens.add(mimico);
+
                 // Adicionando Vilões
 
                 Poder fSuperBizarro = new Poder("Força", 10, 8);
@@ -49,9 +53,15 @@ public class Main {
                                 new ImageIcon("images\\droctopus_img.jpg"), tentaculos);
                 listaPersonagens.add(doutorOctopus);
 
-                Vilao Mimico = new Vilao(pronomeO, "Mímico", marvel, 70, 50, 70,
-                                new ImageIcon("images\\droctopus_img.jpg"));
+                Vilao superSkrull = new Vilao(pronomeO, "SuperSkrull", marvel, 90, 60, 100,
+                                new ImageIcon("images\\superskrull_img.jpg"));
+                listaPersonagens.add(superSkrull);
 
+                Poder fParasita = new Poder("Força", 7, 8);
+                Poder rajada = new Poder("Rajada Energética", 6, 8);
+                Vilao parasita = new Vilao(pronomeO, "Parasita", dc, 70, 90, 70,
+                                new ImageIcon("images\\parasita_img.jpg"), fParasita, rajada);
+                listaPersonagens.add(parasita);
                 InterfaceGUI guii = new InterfaceGUI(listaPersonagens);
         }
 }

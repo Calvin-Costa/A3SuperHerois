@@ -13,40 +13,40 @@ import java.util.List;
 public class InterfaceGUI extends JFrame {
     public List<String> listaNomesDosPersonagens = new ArrayList<>();
     public List<Personagem> listaDePersonagens = new ArrayList<>();
-    Personagem personagemSelEsq;
-    Personagem personagemSelDir;
-    String nomePersonagemSelEsq;
-    String nomePersonagemSelDir;
-    JPanel painelPersonagensEsq = new JPanel();
-    JPanel painelInfos = new JPanel();
-    JPanel painelPersonagensDir = new JPanel();
-    JPanel pButtons = new JPanel();
-    JPanel pSelChar = new JPanel();
-    JPanel pStart = new JPanel();
-    JPanel pReset = new JPanel();
-    JPanel pSelCharR = new JPanel();
-    JPanel pBattleDesc = new JPanel();
-    JPanel painelInfosEsq = new JPanel();
-    JPanel painelInfosDir = new JPanel();
-    JLabel lbl1 = new JLabel();
-    JLabel lbl1Nome = new JLabel("Personagem");
-    JLabel lbl1PF = new JLabel("PF:");
-    JLabel lbl1PE = new JLabel("PE:");
-    JLabel lbl2 = new JLabel();
-    JLabel lbl2Nome = new JLabel("Personagem");
-    JLabel lbl2PF = new JLabel("PF:");
-    JLabel lbl2PE = new JLabel("PE:");
-    JButton botaoSelecionaPersonagemEsq = new JButton("Selecionar Personagem");
+    Personagem personagemSelEsq; // Personagem selecionado na lista esquerda
+    Personagem personagemSelDir; // Personagem selecionado na lista direita
+    String nomePersonagemSelEsq; // Nome do Personagem selecionado na lista esquerda
+    String nomePersonagemSelDir; // Nome do Personagem selecionado na lista direita
+    JPanel painelPersonagensEsq = new JPanel(); // Painel que contém a lista esquerda para selecionar personagens
+    JLabel selPersJLabelEsq = new JLabel("Selecione o Personagem");
+    JPanel painelPersonagensDir = new JPanel(); // Painel que contém a lista direita para selecionar personagens
+    JLabel selPersJLabelDir = new JLabel("Selecione o Personagem");
+    JPanel painelInfos = new JPanel(); // Painel que contém as propriedades dos personagens selecionados nas listas
+    JPanel painelInfosEsq = new JPanel(); // Subpainel que contém as propriedades dos personagens da esquerda
+    JLabel perEsq = new JLabel("Jogador nº1");
+    JLabel fotoEsq = new JLabel(); // label que contém a imagem do personagem selecionado na esquerda
+    JLabel nomeEsq = new JLabel("Personagem");
+    JLabel pfEsq = new JLabel("PF:");
+    JLabel peEsq = new JLabel("PE:");
+    JPanel painelInfosDir = new JPanel(); // Subpainel que contém as propriedades dos personagens da direita
+    JLabel perDir = new JLabel("Jogador nº2");
+    JLabel fotoDir = new JLabel(); // label que contém a imagem do personagem selecionado na direita
+    JLabel nomeDir = new JLabel("Personagem");
+    JLabel pfDir = new JLabel("PF:");
+    JLabel peDir = new JLabel("PE:");
+    JPanel painelBotoes = new JPanel(); // Painel que contém os botões da interface
+    JPanel painelConfronto = new JPanel(); // Painel que contém a descrição do confronto
+
+    JTextArea combateDesc = new JTextArea();
+    JScrollPane scrlPane = new JScrollPane(combateDesc);
     JButton botaoIniciaConfronto = new JButton("Começar Combate");
     JButton botaoResetaConfronto = new JButton("Resetar Personagens");
-    JButton botaoSelecionaPersonagemDir = new JButton("Selecionar Personagem");
     ImageIcon img = new ImageIcon("images\\heroicon.png");
 
     // Construtor
     public InterfaceGUI(List<Personagem> listaPersonagens) {
         this.listaDePersonagens = listaPersonagens;
-        setList(listaPersonagens);
-        setButtonStyleOne(botaoSelecionaPersonagemEsq);
+        setListaNomeIgualANomePersonagens(listaPersonagens);
         this.setBounds(0, 0, 1024, 720);
         this.setTitle("A3 Super Heróis!");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -54,9 +54,6 @@ public class InterfaceGUI extends JFrame {
         this.setLayout(new GridBagLayout());
         setButtonStyleOne(botaoIniciaConfronto);
         setButtonStyleOne(botaoResetaConfronto);
-        setButtonStyleOne(botaoSelecionaPersonagemDir);
-        botaoSelecionaPersonagemDir.setName("Botão Seleciona Direito");
-        botaoSelecionaPersonagemEsq.setName("Botão Seleciona Esquerdo");
         JList listaPersonagemEsq = new JList(listaNomesDosPersonagens.toArray());
         JList listaPersonagemDir = new JList(listaNomesDosPersonagens.toArray());
         listaPersonagemEsq.setFixedCellHeight(30);
@@ -66,10 +63,10 @@ public class InterfaceGUI extends JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 String selectedStringL = (String) listaPersonagemEsq.getSelectedValue();
                 findCharName(selectedStringL, 0);
-                lbl1Nome.setText(personagemSelEsq.getNome());
-                lbl1PF.setText("PF: " + personagemSelEsq.getPf());
-                lbl1PE.setText("PE: " + personagemSelEsq.getPe());
-                lbl1.setIcon(personagemSelEsq.getFoto());
+                nomeEsq.setText(personagemSelEsq.getNome());
+                pfEsq.setText("PF: " + personagemSelEsq.getPf());
+                peEsq.setText("PE: " + personagemSelEsq.getPe());
+                fotoEsq.setIcon(personagemSelEsq.getFoto());
             }
 
         });
@@ -81,53 +78,86 @@ public class InterfaceGUI extends JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 String selectedStringR = (String) listaPersonagemDir.getSelectedValue();
                 findCharName(selectedStringR, 1);
-                lbl2Nome.setText(personagemSelDir.getNome());
-                lbl2PF.setText("PF: " + personagemSelDir.getPf());
-                lbl2PE.setText("PE: " + personagemSelDir.getPe());
-                lbl2.setIcon(personagemSelDir.getFoto());
+                nomeDir.setText(personagemSelDir.getNome());
+                pfDir.setText("PF: " + personagemSelDir.getPf());
+                peDir.setText("PE: " + personagemSelDir.getPe());
+                fotoDir.setIcon(personagemSelDir.getFoto());
             }
-
         });
+        GroupLayout gLaySelEsq = new GroupLayout(painelPersonagensEsq);
+        painelPersonagensEsq.setLayout(gLaySelEsq);
+        gLaySelEsq.setHorizontalGroup(
+                gLaySelEsq.createSequentialGroup()
+                        .addGroup(gLaySelEsq.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(selPersJLabelEsq).addComponent(listaPersonagemEsq)));
+
+        gLaySelEsq.setVerticalGroup(gLaySelEsq.createSequentialGroup()
+                .addGroup(gLaySelEsq.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(selPersJLabelEsq))
+                .addGroup(gLaySelEsq.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(listaPersonagemEsq)));
+
+        GroupLayout gLayBotoes = new GroupLayout(painelBotoes);
+        gLayBotoes.setHorizontalGroup(gLayBotoes.createSequentialGroup().addComponent(botaoIniciaConfronto)
+                .addComponent(botaoResetaConfronto));
+        gLayBotoes.setVerticalGroup(gLayBotoes.createSequentialGroup().addComponent(botaoIniciaConfronto)
+                .addComponent(botaoResetaConfronto));
+
+        GroupLayout gLayInfoEsq = new GroupLayout(painelInfosEsq);
+        painelInfosEsq.setLayout(gLayInfoEsq);
+        gLayInfoEsq.setHorizontalGroup(
+                gLayInfoEsq.createSequentialGroup()
+                        .addGroup(gLayInfoEsq.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(perEsq)
+                                .addComponent(nomeEsq)
+                                .addComponent(pfEsq)
+                                .addComponent(peEsq)
+                                .addComponent(fotoEsq)));
+        gLayInfoEsq.setVerticalGroup(
+                gLayInfoEsq.createSequentialGroup()
+                        .addGroup(gLayInfoEsq.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(perEsq))
+                        .addGroup(gLayInfoEsq.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(nomeEsq))
+                        .addGroup(gLayInfoEsq.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(pfEsq))
+                        .addGroup(gLayInfoEsq.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(peEsq))
+                        .addGroup(gLayInfoEsq.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(fotoEsq)));
+        GroupLayout gLayInfoDir = new GroupLayout(painelInfosDir);
+        painelInfosDir.setLayout(gLayInfoDir);
+        gLayInfoDir.setHorizontalGroup(
+                gLayInfoDir.createSequentialGroup()
+                        .addGroup(gLayInfoDir.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(perDir)
+                                .addComponent(nomeDir)
+                                .addComponent(pfDir)
+                                .addComponent(peDir)
+                                .addComponent(fotoDir)));
+        gLayInfoDir.setVerticalGroup(
+                gLayInfoDir.createSequentialGroup()
+                        .addGroup(gLayInfoDir.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(perDir))
+                        .addGroup(gLayInfoDir.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(nomeDir))
+                        .addGroup(gLayInfoDir.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(pfDir))
+                        .addGroup(gLayInfoDir.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(peDir))
+                        .addGroup(gLayInfoDir.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(fotoDir)));
 
         addConstraints(this, painelPersonagensEsq, 0, 0, 1, 1, GridBagConstraints.BOTH, 0.1f, 0);
-        painelPersonagensEsq.add(listaPersonagemEsq);
         painelPersonagensEsq.setBackground(new Color(64, 73, 202));
-
-        //// Adding "Selected Characters Information" Panel
-
         addConstraints(this, painelInfos, 1, 0, 1, 1, GridBagConstraints.BOTH);
         painelInfos.setBackground(Color.white);
-        GroupLayout gplay = new GroupLayout(painelInfosEsq);
-        painelInfosEsq.setLayout(gplay);
-
-        gplay.setHorizontalGroup(
-                gplay.createSequentialGroup()
-                        .addGroup(gplay.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(lbl1Nome)
-                                .addComponent(lbl1PF)
-                                .addComponent(lbl1PE)
-                                .addComponent(lbl1)));
-        gplay.setVerticalGroup(
-                gplay.createSequentialGroup()
-                        .addGroup(gplay.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbl1Nome))
-                        .addGroup(gplay.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbl1PF))
-                        .addGroup(gplay.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbl1PE))
-                        .addGroup(gplay.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbl1)));
         painelInfos.add(painelInfosEsq);
-        painelInfosEsq.setPreferredSize(new Dimension(225, 350));
-
-        // addConstraints(painelInfos, painelInfosDir, 0, 0, 1, 1,
-        // GridBagConstraints.BOTH);
+        painelInfosEsq.setPreferredSize(new Dimension(225, 315));
+        painelInfosEsq.setBackground(Color.white);
         painelInfos.add(painelInfosDir);
-        painelInfosDir.setPreferredSize(new Dimension(225, 350));
-        painelInfosDir.add(lbl2Nome);
-        painelInfosDir.add(lbl2PF);
-        painelInfosDir.add(lbl2PE);
-        painelInfosDir.add(lbl2);
+        painelInfosDir.setPreferredSize(new Dimension(225, 315));
+        painelInfosDir.setBackground(Color.white);
 
         // Adding "Characters List on Right Side" Panel
         addConstraints(this, painelPersonagensDir, 2, 0, 1, 1, GridBagConstraints.BOTH, 0.1f, 0);
@@ -136,51 +166,22 @@ public class InterfaceGUI extends JFrame {
         painelPersonagensDir.add(listaPersonagemDir);
         painelPersonagensDir.setBackground(new Color(64, 73, 202));
 
-        // Adding Buttons Panel
-        addConstraints(this, pButtons, 0, 1, 3, 1, GridBagConstraints.BOTH, 0, 0f);
-        pButtons.setBackground(new Color(112, 145, 189));
-
-        // Adding "Combat Description" Panel
-        addConstraints(this, pBattleDesc, 0, 2, 3, 3, GridBagConstraints.BOTH, 0, 5);
-        pBattleDesc.add(new JLabel("DESCRIÇÃO DO COMBATE AQUI"));
-        pBattleDesc.setBackground(Color.gray);
-
-        // ------------------------------
-        // Adding Subpanels and buttons in Buttons Panel
-        // ------------------------------
-
-        // Adding SubPanel in Buttons Panel
-        pButtons.setLayout(new GridBagLayout());
-
-        // Adding Button "select character on the left" on the panel pButtons
-        addConstraints(pButtons, pSelChar, 0, 0, 1, 2, GridBagConstraints.BOTH);
-        botaoSelecionaPersonagemEsq.addActionListener(e -> {
+        botaoIniciaConfronto.setSize(512, 30);
+        botaoIniciaConfronto.addActionListener(w -> {
             try {
-                System.out.println(personagemSelEsq.getNome());
-            } catch (Exception w) {
-                System.out.println("Nenhum personagem selecionado!");
+                Confronto c1 = new Confronto(personagemSelEsq, personagemSelDir);
+                c1.confrontar();
+            } catch (Exception e) {
+                System.out.println("Algum erro ocorreu");
             }
         });
-        pSelChar.add(botaoSelecionaPersonagemEsq);
 
-        // Adding Button "start battle" on the Panel pButtons
-        addConstraints(pButtons, pStart, 1, 0, 1, 1, GridBagConstraints.BOTH);
-        pStart.add(botaoIniciaConfronto);
-        botaoIniciaConfronto.addActionListener(e -> {
-            Confronto c1 = new Confronto(personagemSelEsq, personagemSelDir);
-            c1.confrontar();
-        });
-        // Adding Button "reset characters" on the Panel pButtons
-        addConstraints(pButtons, pReset, 1, 1, 1, 1, GridBagConstraints.BOTH);
-        pReset.add(botaoResetaConfronto);
-        // Adding Button "select character on the right" on the Panel pButtons
-        addConstraints(pButtons, pSelCharR, 2, 0, 1, 2, GridBagConstraints.BOTH);
-        botaoSelecionaPersonagemDir.addActionListener(e -> {
-            System.out.println(personagemSelDir.getNome());
-        });
-        pSelCharR.add(botaoSelecionaPersonagemDir);
+        botaoResetaConfronto.setSize(512, 30);
+        addConstraints(this, painelBotoes, 0, 1, 3, 1, GridBagConstraints.BOTH, 0.1f, 0);
+        addConstraints(this, painelConfronto, 0, 2, 3, 3, GridBagConstraints.BOTH, 0, 5);
+        painelConfronto.add(new JLabel("DESCRIÇÃO DO COMBATE AQUI"));
+        painelConfronto.setBackground(Color.gray);
 
-        // Making everything visible at the end to avoid bugs
         this.setVisible(true);
     }
 
@@ -240,7 +241,7 @@ public class InterfaceGUI extends JFrame {
 
     // Method that takes an ArrayList<Personagem> and get the names from every
     // instance of character created, returning a list
-    public void setList(List<Personagem> personagens) {
+    public void setListaNomeIgualANomePersonagens(List<Personagem> personagens) {
         for (int i = 0; i < personagens.size(); i++) {
             this.listaNomesDosPersonagens.add(personagens.get(i).getNome());
         }
