@@ -48,6 +48,11 @@ public class Main {
                                 new ImageIcon("images\\droctopus_img.jpg"), tentaculos);
                 listaPersonagens.add(doutorOctopus);
 
+                Vilao Mimico = new Vilao("Mímico", marvel, 70, 50, 70, new ImageIcon("images\\droctopus_img.jpg"));
+
                 InterfaceGUI guii = new InterfaceGUI(listaPersonagens);
+
+                Confronto c1 = new Confronto(homemAranha, Mimico);
+                c1.confrontar();
         }
 }

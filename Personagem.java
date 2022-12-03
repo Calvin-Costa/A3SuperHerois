@@ -81,13 +81,8 @@ public abstract class Personagem {
         this.poderes.remove(p);
     }
 
-    public void listarPoderes() {
-        Iterator<Poder> it = poderes.iterator();
-        Poder poder = new Poder();
-        while (it.hasNext()) {
-            poder = it.next();
-            System.out.printf("\n%s", poder.getNome());
-        }
+    public void copiarPoderes(Personagem copia) {
+        this.poderes = copia.poderes;
     }
 
     // Constutor Personagem
@@ -104,6 +99,8 @@ public abstract class Personagem {
         this.editora = editora;
         this.pf = pf;
         this.pe = pe;
+        this.pfInicial = pf;
+        this.peInicial = pe;
         this.foto = foto;
         for (int i = 0; i < poder.length; i++) {
             this.adicionarPoder(poder[i]);
