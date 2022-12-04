@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Confronto {
     Personagem vencedor;
+    Personagem perdedor;
     Personagem p1;
     Personagem p2;
-    JTextArea jta = new JTextArea();
     List<String> listaStringConfronto = new ArrayList<>();
 
     public Confronto(Personagem p1, Personagem p2) {
@@ -15,50 +15,36 @@ public class Confronto {
     }
 
     public List<String> confrontar() {
+        // Verificação de editoras
+        verificaEditoras();
         if (p1.isTipoMimico() && p2.isTipoMimico()) {
             listaStringConfronto.add("Deu empate. Dois mimicos não lutam entre si!");
             return listaStringConfronto;
         }
         if (p1.isTipoMimico()) {
-            p1.copiarPoderes(p2);
+            p1.clonarPoderes(p2);
         }
         if (p2.isTipoMimico()) {
-            p2.copiarPoderes(p1);
+            p2.clonarPoderes(p1);
         }
 
-        // recuperar tudo no p1
-        p1.setPe(p1.getPeInicial());
-        p1.setPf(p1.getPfInicial());
-        // recuperar tudo no p2
-        p2.setPe(p2.getPeInicial());
-        p2.setPf(p2.getPfInicial());
-
-        // Verificação de editoras
-        if (!p1.getEditora().equals(p2.getEditora())) {
-            listaStringConfronto.add(String.format("Confronto CrossOver.%n"));
-            System.out.printf("Confronto CrossOver.%n");
-        } else {
-            System.out.println("Confronto " + p1.getEditora());
-            listaStringConfronto.add(String.format("Confronto %s%n", p1.getEditora()));
-
-        }
-
-        // Exibur o nome dos oponentes e seus PFs
-
+        // Exibir o nome dos oponentes e seus PFs
         // Oponente 1
         listaStringConfronto
-                .add(String.format("%s %s tem %d de pontos de força, e está pronto para o combate!%n", p1.getPronome(),
+                .add(String.format("%s %s tem %d de pontos de força e %d de energia e está pronto para o combate!%n",
+                        p1.getPronome(),
                         p1.getNome(),
-                        p1.getPf()));
+                        p1.getPf(), p1.getPeInicial()));
         System.out.printf("%s %s tem %d de pontos de força, e está pronto para o combate!%n", p1.getPronome(),
                 p1.getNome(),
                 p1.getPf());
 
         // Oponente 2
         listaStringConfronto
-                .add(String.format("%s %s tem %d de pontos de força, e está pronto para o combate!%n", p2.getPronome(),
+                .add(String.format("%s %s tem %d de pontos de força e %d de energia, e está pronto para o combate!%n",
+                        p2.getPronome(),
                         p2.getNome(),
-                        p2.getPf()));
+                        p2.getPf(), p2.getPeInicial()));
         System.out.printf("%s %s tem %d de pontos de força, e está pronto para o combate!%n", p2.getPronome(),
                 p2.getNome(),
                 p2.getPf());
@@ -71,22 +57,44 @@ public class Confronto {
 
         }
 
-        if (p1.getPf() < 0) {
+        if (p1.getPf() <= 0) {
 
             this.vencedor = p2;
-
+            this.perdedor = p1;
         } else {
-
             this.vencedor = p1;
+            this.perdedor = p2;
+
+        }
+        if (vencedor.isTipoParasita()) {
+            vencedor.drenar(perdedor);
+            listaStringConfronto.add(
+                    String.format("%s %s drenou a energia de %s! Sua energia agora é %d",
+                            vencedor.getPronome(), vencedor.getNome(), perdedor.getNome(),
+                            vencedor.getPeInicial()));
         }
         listaStringConfronto.add(
                 String.format("%n%s %s foi o vencedor desse confronto!%n", vencedor.getPronome(), vencedor.getNome()));
         System.out.printf("%n%s %s foi o vencedor desse confronto!%n", vencedor.getPronome(), vencedor.getNome());
-
+        recuperarPersonagens(p1, p2);
         return listaStringConfronto;
     }
 
-    public JTextArea gTextArea() {
-        return jta;
+    public void verificaEditoras() {
+        if (!p1.getEditora().equals(p2.getEditora())) {
+            listaStringConfronto.add(String.format("Confronto CrossOver.%n"));
+            System.out.printf("Confronto CrossOver.%n");
+        } else {
+            System.out.println("Confronto " + p1.getEditora());
+            listaStringConfronto.add(String.format("Confronto %s%n", p1.getEditora()));
+
+        }
+    }
+
+    public void recuperarPersonagens(Personagem p1, Personagem p2) {
+        p1.setPe(p1.getPeInicial());
+        p1.setPf(p1.getPfInicial());
+        p2.setPe(p2.getPeInicial());
+        p2.setPf(p2.getPfInicial());
     }
 }

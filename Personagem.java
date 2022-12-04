@@ -108,7 +108,8 @@ public abstract class Personagem {
         this.poderes.remove(p);
     }
 
-    public void copiarPoderes(Personagem copia) {
+    public void clonarPoderes(Personagem copia) {
+        this.poderes = null;
         this.poderes = copia.poderes;
     }
 
@@ -183,4 +184,7 @@ public abstract class Personagem {
 
     }
 
+    public void drenar(Personagem p) {
+        this.setPeInicial(peInicial + p.getPe());
+    }
 }

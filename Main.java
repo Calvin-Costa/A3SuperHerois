@@ -50,7 +50,7 @@ public class Main {
                 listaPersonagens.add(duendeVerde);
 
                 Poder tentaculos = new Poder("Tentáculos", 6, 4);
-                Vilao doutorOctopus = new Vilao(pronomeO, "Doutor Octopus", marvel, 40, 40, 40,
+                Vilao doutorOctopus = new Vilao(pronomeO, "Doutor Octopus", marvel, 70, 40, 40,
                                 new ImageIcon("images\\droctopus_img.jpg"), tentaculos);
                 listaPersonagens.add(doutorOctopus);
 
@@ -61,8 +61,9 @@ public class Main {
 
                 Poder fParasita = new Poder("Força", 7, 8);
                 Poder rajada = new Poder("Rajada Energética", 6, 8);
-                Vilao parasita = new Vilao(pronomeO, "Parasita", dc, 70, 90, 70,
+                Vilao parasita = new Vilao(pronomeO, "Parasita", dc, 90, 70, 70,
                                 new ImageIcon("images\\parasita_img.jpg"), fParasita, rajada);
+                parasita.setTipoParasita(true);
                 listaPersonagens.add(parasita);
                 InterfaceGUI guii = new InterfaceGUI(listaPersonagens);
         }

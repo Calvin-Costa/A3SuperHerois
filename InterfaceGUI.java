@@ -13,8 +13,8 @@ import java.util.List;
 public class InterfaceGUI extends JFrame {
     public List<String> listaNomesDosPersonagens = new ArrayList<>();
     public List<Personagem> listaDePersonagens = new ArrayList<>();
-    Personagem personagemSelEsq; // Personagem selecionado na lista esquerda
-    Personagem personagemSelDir; // Personagem selecionado na lista direita
+    Personagem persSelEsq; // Personagem selecionado na lista esquerda
+    Personagem persSelDir; // Personagem selecionado na lista direita
     String nomePersonagemSelEsq; // Nome do Personagem selecionado na lista esquerda
     String nomePersonagemSelDir; // Nome do Personagem selecionado na lista direita
     JPanel painelPersonagensEsq = new JPanel(); // Painel que contém a lista esquerda para selecionar personagens
@@ -60,30 +60,17 @@ public class InterfaceGUI extends JFrame {
         listaPersonagemEsq.setFixedCellHeight(30);
         listaPersonagemEsq.setFixedCellWidth(120);
         listaPersonagemEsq.setBorder(new EmptyBorder(30, 0, 30, 0));
-        listaPersonagemEsq.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                String selectedStringL = (String) listaPersonagemEsq.getSelectedValue();
-                findCharName(selectedStringL, 0);
-                nomeEsq.setText(personagemSelEsq.getNome());
-                pfEsq.setText("PF: " + personagemSelEsq.getPf());
-                peEsq.setText("PE: " + personagemSelEsq.getPe());
-                fotoEsq.setIcon(personagemSelEsq.getFoto());
-            }
-
+        listaPersonagemEsq.addListSelectionListener(e -> {
+            persSelEsq = achaPersDeNomeIgualA((String) listaPersonagemEsq.getSelectedValue());
+            setCharInfos(0);
         });
 
         listaPersonagemDir.setFixedCellHeight(30);
         listaPersonagemDir.setFixedCellWidth(120);
         listaPersonagemDir.setBorder(new EmptyBorder(30, 0, 30, 0));
-        listaPersonagemDir.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                String selectedStringR = (String) listaPersonagemDir.getSelectedValue();
-                findCharName(selectedStringR, 1);
-                nomeDir.setText(personagemSelDir.getNome());
-                pfDir.setText("PF: " + personagemSelDir.getPf());
-                peDir.setText("PE: " + personagemSelDir.getPe());
-                fotoDir.setIcon(personagemSelDir.getFoto());
-            }
+        listaPersonagemDir.addListSelectionListener(e -> {
+            persSelDir = achaPersDeNomeIgualA((String) listaPersonagemDir.getSelectedValue());
+            setCharInfos(1);
         });
         GroupLayout gLaySelEsq = new GroupLayout(painelPersonagensEsq);
         painelPersonagensEsq.setLayout(gLaySelEsq);
@@ -97,6 +84,8 @@ public class InterfaceGUI extends JFrame {
                         .addComponent(selPersJLabelEsq))
                 .addGroup(gLaySelEsq.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(listaPersonagemEsq)));
+
+        selPersJLabelEsq.setForeground(Color.white);
 
         GroupLayout gLayBotoes = new GroupLayout(painelBotoes);
         gLayBotoes.setHorizontalGroup(gLayBotoes.createSequentialGroup().addComponent(botaoIniciaConfronto)
@@ -169,13 +158,13 @@ public class InterfaceGUI extends JFrame {
         botaoIniciaConfronto.setSize(512, 30);
         botaoIniciaConfronto.addActionListener(w -> {
             try {
-                Confronto c1 = new Confronto(personagemSelEsq, personagemSelDir);
+                Confronto c1 = new Confronto(persSelEsq, persSelDir);
                 descCombate.setText("");
                 List<String> listaStrings = c1.confrontar();
                 for (String a : listaStrings) {
                     descCombate.append(a);
                 }
-                // descCombate = c1.gTextArea();
+                setCharInfos(2);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println(e);
@@ -183,17 +172,27 @@ public class InterfaceGUI extends JFrame {
         });
 
         botaoResetaConfronto.setSize(512, 30);
+        botaoResetaConfronto.addActionListener(e -> {
+            try {
+                achaPersDeNomeIgualA("Parasita").setPeInicial(70);
+                setCharInfos(2);
+            } catch (Exception w) {
+                System.out.println("Algum erro ocorreu");
+            }
+        });
         addConstraints(this, painelBotoes, 0, 1, 3, 1, GridBagConstraints.BOTH, 0.1f, 0);
         addConstraints(this, painelConfronto, 0, 2, 3, 3, GridBagConstraints.BOTH, 0, 5);
 
         painelConfronto.setLayout(new BorderLayout());
         painelConfronto.add(scrlPane);
+        descCombate.setOpaque(false);
+        scrlPane.setOpaque(false);
         painelConfronto.setBackground(Color.gray);
 
         this.setVisible(true);
     }
 
-    // Method that makes it easier and cleaner to add constraints
+    // Metodo para facilitar adição de constraints
     public void addConstraints(Container container, Component component, int gridx, int gridy, int width, int height,
             int fill) {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -208,8 +207,7 @@ public class InterfaceGUI extends JFrame {
 
     }
 
-    // Method that makes it easier and cleaner to add constraints with parameters
-    // weight being sent as well
+    // Metodo addConstraints sobrecarregado com pesos
     public void addConstraints(Container container, Component component, int gridx, int gridy, int width, int height,
             int fill, float weightx, float weighty) {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -224,8 +222,7 @@ public class InterfaceGUI extends JFrame {
 
     }
 
-    // Method that makes it easier and cleaner to add constraints with Insets being
-    // sent as well
+    // Metodo addConstraints sobrecarregado com insets
     public void addConstraints(Container container, Component component, int gridx, int gridy, int width, int height,
             int fill, Insets insets) {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -239,7 +236,7 @@ public class InterfaceGUI extends JFrame {
 
     }
 
-    // Method that makes it cleaner to stylize Buttons
+    // Metodo para estilizar os botões
     public void setButtonStyleOne(JButton button) {
         button.setFocusable(false);
         button.setBackground(new Color(61, 181, 210));
@@ -255,15 +252,36 @@ public class InterfaceGUI extends JFrame {
         }
     }
 
-    public void findCharName(String name, int i) {
+    public Personagem achaPersDeNomeIgualA(String name) {
+        Personagem a = null;
         for (Personagem p : listaDePersonagens) {
             if (p.getNome().equals(name)) {
-                if (i == 0) {
-                    this.personagemSelEsq = p;
-                } else {
-                    this.personagemSelDir = p;
-                }
+                a = p;
             }
+        }
+        return a;
+    }
+
+    public void setCharInfos(int index) {
+        if (index == 0) {
+            nomeEsq.setText(persSelEsq.getNome());
+            pfEsq.setText("PF: " + persSelEsq.getPfInicial());
+            peEsq.setText("PE: " + persSelEsq.getPeInicial());
+            fotoEsq.setIcon(persSelEsq.getFoto());
+        } else if (index == 1) {
+            nomeDir.setText(persSelDir.getNome());
+            pfDir.setText("PF: " + persSelDir.getPfInicial());
+            peDir.setText("PE: " + persSelDir.getPeInicial());
+            fotoDir.setIcon(persSelDir.getFoto());
+        } else {
+            nomeEsq.setText(persSelEsq.getNome());
+            pfEsq.setText("PF: " + persSelEsq.getPfInicial());
+            peEsq.setText("PE: " + persSelEsq.getPeInicial());
+            fotoEsq.setIcon(persSelEsq.getFoto());
+            nomeDir.setText(persSelDir.getNome());
+            pfDir.setText("PF: " + persSelDir.getPfInicial());
+            peDir.setText("PE: " + persSelDir.getPeInicial());
+            fotoDir.setIcon(persSelDir.getFoto());
         }
     }
 }
