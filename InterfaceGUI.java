@@ -189,7 +189,7 @@ public class InterfaceGUI extends JFrame {
         bordaPreta.setPreferredSize(new Dimension(1, 335));
         painelInfos.add(bordaPreta);
         painelBranco.setBackground(corPainelInfos);
-        painelBranco.setPreferredSize(new Dimension(10, 335));
+        painelBranco.setPreferredSize(new Dimension(5, 335));
         painelInfos.add(painelBranco);
         painelInfosEsq.setBackground(corPainelInfos);
         painelInfos.add(painelInfosDir);
