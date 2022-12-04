@@ -57,9 +57,9 @@ public class InterfaceGUI extends JFrame {
         setButtonStyleOne(botaoResetaConfronto);
         JList listaPersonagemEsq = new JList(listaNomesDosPersonagens.toArray());
         JList listaPersonagemDir = new JList(listaNomesDosPersonagens.toArray());
-        listaPersonagemEsq.setFixedCellHeight(30);
-        listaPersonagemEsq.setFixedCellWidth(120);
-        listaPersonagemEsq.setBorder(new EmptyBorder(30, 0, 30, 0));
+        setEstiloDasListas(listaPersonagemEsq);
+        setEstiloDasListas(listaPersonagemDir);
+        listaPersonagemEsq.setBorder(new EmptyBorder(15, 5, 15, 5));
         listaPersonagemEsq.addListSelectionListener(e -> {
             persSelEsq = achaPersDeNomeIgualA((String) listaPersonagemEsq.getSelectedValue());
             setCharInfos(0);
@@ -285,5 +285,15 @@ public class InterfaceGUI extends JFrame {
             peDir.setText("PE: " + persSelDir.getPeInicial());
             fotoDir.setIcon(persSelDir.getFoto());
         }
+    }
+
+    public void setEstiloDasListas(JList list) {
+        list.setFixedCellHeight(30);
+        list.setFixedCellWidth(120);
+        list.setBackground(Color.darkGray);
+        list.setForeground(Color.white);
+        list.setSelectionForeground(Color.white);
+        list.setSelectionBackground(Color.darkGray);
+        list.setBorder(new EmptyBorder(15, 5, 15, 5));
     }
 }
