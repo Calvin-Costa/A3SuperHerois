@@ -186,8 +186,10 @@ public class InterfaceGUI extends JFrame {
         painelConfronto.setLayout(new BorderLayout());
         painelConfronto.add(scrlPane);
         descCombate.setOpaque(false);
+        descCombate.setForeground(Color.white);
+        scrlPane.getViewport().setOpaque(false);
         scrlPane.setOpaque(false);
-        painelConfronto.setBackground(Color.gray);
+        painelConfronto.setBackground(Color.darkGray);
 
         this.setVisible(true);
     }
