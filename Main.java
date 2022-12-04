@@ -28,8 +28,9 @@ public class Main {
                                 new ImageIcon("images\\fenix_img.jpg"), fFenix);
                 listaPersonagens.add(fenix);
 
-                Heroi mimico = new Heroi(pronomeO, "Mimico", marvel, 70, 50, "Calvin Montgomery Rankin",
+                Heroi mimico = new Heroi(pronomeO, "Mímico", marvel, 70, 50, "Calvin Montgomery Rankin",
                                 new ImageIcon("images\\mimico_img.jpg"));
+                mimico.setTipoMimico(true);
                 listaPersonagens.add(mimico);
 
                 // Adicionando Vilões
@@ -55,6 +56,7 @@ public class Main {
 
                 Vilao superSkrull = new Vilao(pronomeO, "SuperSkrull", marvel, 90, 60, 100,
                                 new ImageIcon("images\\superskrull_img.jpg"));
+                superSkrull.setTipoMimico(true);
                 listaPersonagens.add(superSkrull);
 
                 Poder fParasita = new Poder("Força", 7, 8);

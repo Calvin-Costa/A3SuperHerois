@@ -14,9 +14,11 @@ public abstract class Personagem {
     private int pfInicial;
     private ImageIcon foto = new ImageIcon();
     private String pronome;
+    private boolean tipoMimico = false;
+    private boolean tipoParasita = false;
 
     // Criando o Array de personagens
-    private ArrayList<Poder> poderes = new ArrayList<Poder>();
+    private ArrayList<Poder> poderes = new ArrayList<>();
 
     public String getNome() {
         return nome;
@@ -24,6 +26,22 @@ public abstract class Personagem {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isTipoMimico() {
+        return tipoMimico;
+    }
+
+    public void setTipoMimico(boolean tipoEspecial) {
+        this.tipoMimico = tipoEspecial;
+    }
+
+    public boolean isTipoParasita() {
+        return tipoParasita;
+    }
+
+    public void setTipoParasita(boolean tipoEspecial) {
+        this.tipoParasita = tipoEspecial;
     }
 
     public String getPronome() {
@@ -117,8 +135,8 @@ public abstract class Personagem {
         }
     }
 
-    public void Atacar(Personagem p2) {
-
+    public List<String> atacar(Personagem p2) {
+        List<String> listaStringAtacar = new ArrayList<>();
         //
         // System.out.printf("O herói %s possui: %d de energia\n", getNome(), getPe());
 
@@ -128,6 +146,9 @@ public abstract class Personagem {
         // System.out.println(this.poderes.get(randomNumber).getPe());
 
         if (getPe() > this.poderes.get(randomNumber).getPe()) {
+            listaStringAtacar.add(String.format("%s %s ataca com %s e causou %d de dano!%n", getPronome(), getNome(),
+                    this.poderes.get(randomNumber).getNome(), this.poderes.get(randomNumber).getDano()));
+
             System.out.printf("%s %s ataca com %s e causou %d de dano!%n", getPronome(), getNome(),
                     this.poderes.get(randomNumber).getNome(), this.poderes.get(randomNumber).getDano());
 
@@ -138,31 +159,28 @@ public abstract class Personagem {
             aux = p2.getPf() - this.poderes.get(randomNumber).getDano();
 
             p2.setPf(aux);
-
+            listaStringAtacar.add(String.format("A nova energia de %s é de: %d%n", getNome(), pe));
             System.out.printf("A nova energia de %s é de: %d%n", getNome(), pe);
+            listaStringAtacar.add(String.format("A nova força de %s é de: %d%n", p2.getNome(), p2.getPf()));
             System.out.printf("A nova força de %s é de: %d%n", p2.getNome(), p2.getPf());
 
         } else {
+            listaStringAtacar.add(
+                    String.format("%s %s está esgotado. Utilize esse turno para recuperar%n", getPronome(), getNome()));
             System.out.printf("%s %s está esgotado. Utilize esse turno para recuperar%n", getPronome(), getNome());
 
-            Recuperar();
+            listaStringAtacar.add(recuperar());
 
         }
-
+        return listaStringAtacar;
     }
 
-    public void Recuperar() {
+    public String recuperar() {
 
         pe = peInicial * 30 / 100;
-
         System.out.printf("A nova energia do %s é de %d pontos%n", getNome(), getPe());
+        return String.format("A nova energia do %s é de %d pontos%n", getNome(), getPe());
 
-    }
-
-    public void getPoderes() {
-
-        System.out.printf("O %s com dano de %d e energia de %s%n ", this.poderes.get(0).getNome(),
-                this.poderes.get(0).getDano(), this.poderes.get(0).getPe());
     }
 
 }

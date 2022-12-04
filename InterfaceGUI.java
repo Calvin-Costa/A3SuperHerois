@@ -37,8 +37,9 @@ public class InterfaceGUI extends JFrame {
     JPanel painelBotoes = new JPanel(); // Painel que contém os botões da interface
     JPanel painelConfronto = new JPanel(); // Painel que contém a descrição do confronto
 
-    JTextArea combateDesc = new JTextArea();
-    JScrollPane scrlPane = new JScrollPane(combateDesc);
+    JTextArea descCombate = new JTextArea();
+    JScrollPane scrlPane = new JScrollPane(descCombate);
+
     JButton botaoIniciaConfronto = new JButton("Começar Combate");
     JButton botaoResetaConfronto = new JButton("Resetar Personagens");
     ImageIcon img = new ImageIcon("images\\heroicon.png");
@@ -159,7 +160,6 @@ public class InterfaceGUI extends JFrame {
         painelInfosDir.setPreferredSize(new Dimension(225, 315));
         painelInfosDir.setBackground(Color.white);
 
-        // Adding "Characters List on Right Side" Panel
         addConstraints(this, painelPersonagensDir, 2, 0, 1, 1, GridBagConstraints.BOTH, 0.1f, 0);
         painelPersonagensDir.add(new JLabel("Teste 3"));
 
@@ -170,16 +170,24 @@ public class InterfaceGUI extends JFrame {
         botaoIniciaConfronto.addActionListener(w -> {
             try {
                 Confronto c1 = new Confronto(personagemSelEsq, personagemSelDir);
-                c1.confrontar();
+                descCombate.setText("");
+                List<String> listaStrings = c1.confrontar();
+                for (String a : listaStrings) {
+                    descCombate.append(a);
+                }
+                // descCombate = c1.gTextArea();
             } catch (Exception e) {
-                System.out.println("Algum erro ocorreu");
+                e.printStackTrace();
+                System.out.println(e);
             }
         });
 
         botaoResetaConfronto.setSize(512, 30);
         addConstraints(this, painelBotoes, 0, 1, 3, 1, GridBagConstraints.BOTH, 0.1f, 0);
         addConstraints(this, painelConfronto, 0, 2, 3, 3, GridBagConstraints.BOTH, 0, 5);
-        painelConfronto.add(new JLabel("DESCRIÇÃO DO COMBATE AQUI"));
+
+        painelConfronto.setLayout(new BorderLayout());
+        painelConfronto.add(scrlPane);
         painelConfronto.setBackground(Color.gray);
 
         this.setVisible(true);
