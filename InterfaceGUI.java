@@ -189,8 +189,7 @@ public class InterfaceGUI extends JFrame {
         bordaPreta.setPreferredSize(new Dimension(1, 335));
         painelInfos.add(bordaPreta);
         painelBranco.setBackground(corPainelInfos);
-        ;
-        painelBranco.setPreferredSize(new Dimension(50, 335));
+        painelBranco.setPreferredSize(new Dimension(10, 335));
         painelInfos.add(painelBranco);
         painelInfosEsq.setBackground(corPainelInfos);
         painelInfos.add(painelInfosDir);
@@ -326,7 +325,8 @@ public class InterfaceGUI extends JFrame {
             pfEsq.setText("PF: " + persSelEsq.getPfInicial());
             peEsq.setText("PE: " + persSelEsq.getPeInicial());
             fotoEsq.setIcon(persSelEsq.getFoto());
-        } else if (index == 1) {
+        }
+        if (index == 1) {
             nomeDir.setText(persSelDir.getNome());
             pfDir.setText("PF: " + persSelDir.getPfInicial());
             peDir.setText("PE: " + persSelDir.getPeInicial());
