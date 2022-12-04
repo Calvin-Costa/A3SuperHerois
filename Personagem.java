@@ -17,9 +17,10 @@ public abstract class Personagem {
     private boolean tipoMimico = false;
     private boolean tipoParasita = false;
 
-    // Criando o Array de personagens
+    // Criando o Array de poderes do Personagem
     private ArrayList<Poder> poderes = new ArrayList<>();
 
+    // Métodos Getters e Setters
     public String getNome() {
         return nome;
     }
@@ -100,6 +101,8 @@ public abstract class Personagem {
         this.pfInicial = pfInicial;
     }
 
+    // Métodos de tratamento dos Poderes
+
     public void adicionarPoder(Poder p) {
         this.poderes.add(p);
     }
@@ -113,27 +116,23 @@ public abstract class Personagem {
         this.poderes = copia.poderes;
     }
 
-    // Constutor Personagem
-    public Personagem(String nome, String editora, int pf, int pe) {
-        this.nome = nome;
-        this.editora = editora;
-        this.pf = pf;
-        this.pe = pe;
+    // Métodos de combate
+
+    public String recuperar() {
+
+        pe = peInicial * 30 / 100;
+        System.out.printf("A nova energia do %s é de %d pontos%n", getNome(), getPe());
+        return String.format("A nova energia do %s é de %d pontos%n", getNome(), getPe());
+
     }
 
-    // Construtor Personagem com qtd variável de poderes
-    public Personagem(String pronome, String nome, String editora, int pf, int pe, ImageIcon foto, Poder... poder) {
-        this.pronome = pronome;
-        this.nome = nome;
-        this.editora = editora;
-        this.pf = pf;
-        this.pe = pe;
-        this.pfInicial = pf;
-        this.peInicial = pe;
-        this.foto = foto;
-        for (int i = 0; i < poder.length; i++) {
-            this.adicionarPoder(poder[i]);
-        }
+    public void recuperarTudo() {
+        this.setPe(this.getPeInicial());
+        this.setPf(this.getPfInicial());
+    }
+
+    public void drenar(Personagem p) {
+        this.setPeInicial(peInicial + p.getPe());
     }
 
     public List<String> atacar(Personagem p2) {
@@ -176,15 +175,27 @@ public abstract class Personagem {
         return listaStringAtacar;
     }
 
-    public String recuperar() {
-
-        pe = peInicial * 30 / 100;
-        System.out.printf("A nova energia do %s é de %d pontos%n", getNome(), getPe());
-        return String.format("A nova energia do %s é de %d pontos%n", getNome(), getPe());
-
+    // Constutor Personagem
+    public Personagem(String nome, String editora, int pf, int pe) {
+        this.nome = nome;
+        this.editora = editora;
+        this.pf = pf;
+        this.pe = pe;
     }
 
-    public void drenar(Personagem p) {
-        this.setPeInicial(peInicial + p.getPe());
+    // Construtor Personagem com qtd variável de poderes
+    public Personagem(String pronome, String nome, String editora, int pf, int pe, ImageIcon foto, Poder... poder) {
+        this.pronome = pronome;
+        this.nome = nome;
+        this.editora = editora;
+        this.pf = pf;
+        this.pe = pe;
+        this.pfInicial = pf;
+        this.peInicial = pe;
+        this.foto = foto;
+        for (int i = 0; i < poder.length; i++) {
+            this.adicionarPoder(poder[i]);
+        }
     }
+
 }
